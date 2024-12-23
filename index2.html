@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container .item{
+        background-color: brown;
+        color: white;
+    }
+    .footer-container .item{
+        background-color: rgb(23, 151, 104);
+        color: white;
+    }
+    .main-container >.item{
+        background-color: blueviolet;
+        padding: 10px;
+
+    }
+    .button{
+        background-color: burlywood;
+        padding: 10px;
+    }   
+    .button.active{
+        background-color: cadetblue;
+        padding: 10px;
+    }
+    .button.warning{
+        background-color: chartreuse;
+        padding: 10px;
+    }
+    .item1 + .item2{
+        background-color: coral;
+    }
+    input[type="text"]{
+        background-color: cornflowerblue;
+        border: 2px;
+        height: 30px;
+        margin: 2px;
+        
+    }
+</style>
+</style>
+<body>
+    <!-- 1.item เป็นลูก container ชั้นเดียว -->
+    <div class="container">
+        container
+        <div class="item">
+            item
+        </div>
+    </div>
+    
+    <!-- 2.item เป็นลูก container เเค่ชั้นเดียว -->
+    <div class="main-container">
+        container
+        <div class="item">
+            item
+            <div class="item">
+                item1
+            </div>
+            <div class="item">
+                item2
+            </div>
+            <div class="item">
+                item3
+            </div>
+        </div>
+    </div>
+    <!-- 3.มี class ติดกัน -->
+    <button class="button">ปุ่ม</button>
+    <button class="button active">ปุ่ม</button>
+    <button class="button warning">ปุ่ม</button>
+    <!-- 4.เพื่อนกับ adjacent -->
+    <div class="item1">item 1</div>
+    <div class="item2">item 2</div>
+    <!-- 5.attribute selector -->
+    <input type="text" name="username">
+    <input type="text" name="password">
+    <input type="text" name="email">
+</body>
+</html>
