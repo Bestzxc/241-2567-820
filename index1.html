@@ -1,67 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        /*dev อ่านตรงนี้
-        1.เเต่งใคร(id, class, DOM=body) 2.เเต่งอะไร */
-        @font-face {
-            font-family: 'kanit';
-            src: url('./Kanit/Kanit-Medium.ttf');
-        }
+    <link rel="stylesheet" href="styles.css">
 
-        html {
-            font-size: 18px;
-        }
-
-        body {
-            font-family: 'kanit';
-        }
-        .header{
-            font-size: 30px;
-            text-align: center;
-            margin: 20px;
-        }
-        .header-form {
-            /*ใช้ . เพราะใช้ class, - คือ and*/
-            width: 140px;
-        }
-        
-        .container {
-            width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: bisque;
-            padding:  20px;
-        }
-        .flex{
-            display: flex;
-        }
-        .form-input{
-            margin-bottom: 10px;
-        }
-        input.form, textarea{
-            border: 1px solid black;
-            width: 100%;
-        }
-        .button{
-            border: 0;
-            width: 100%;
-            height: 40px;
-        }
-        .center{
-            text-align: center;
-        }
-        
-
-    </style>
 </head>
-
 <body>
-    
     <div class="container">
         <div class="header">
             Register form
@@ -75,41 +22,43 @@
             <input class="form" type="text">
         </div>
         <div class="flex form-input">
-            <div class="header-form">อายุ</div>
-            <input class="form" type="number" min="0" max="150">
-        </div>  
-
+            <div class="header-form">อายุ</div> 
+            <input class="form" type="number" min="0" max="100">
+        </div>
         <div class="flex gender form-input">
-            <div>เพศ</div>
-            <div>
-                <input class="gender" type="radio">ชาย
-                <input class="gender" type="radio">หญิง
-                <input class="gender" type="radio">อื่นๆ
+            <div class="header-form">เพศ</div> 
+            <div class="flex">
+                <div>
+                    <input name="gender" type="radio"> ชาย
+                </div>
+                <div>
+                    <input name="gender" type="radio"> หญิง
+                </div>
+                <div>
+                    <input name="gender" type="radio"> อื่นๆ
+                </div>
             </div>
         </div>
-
         <div class="form-input">
-            สิ่งที่สนใจ
+            งานอดิเรก
             <div>
-                <input name="interest" type="checkbox">เรียน
+                <input name="interest" type="checkbox"> อ่านหนังสือ
             </div>
             <div>
-                <input name="interest" type="checkbox">เล่นเกม
+                <input name="interest" type="checkbox"> ดูหนัง
             </div>
             <div>
-                <input name="interest" type="checkbox">อ่านหนังสือ
+                <input name="interest" type="checkbox"> ฟังเพลง
             </div>
         </div>
-
         <div class="form-input">
-            คำอธิบายตัวเอง
+            คำอธิบาย
             <textarea></textarea>
         </div>
         <div class="center">
-            <button>ส่งข้อมูล</button>
+            <button class="button">ส่งข้อมูล</button>
         </div>
     </div>
-
+        
 </body>
-
 </html>
