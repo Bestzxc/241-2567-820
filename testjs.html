@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <h2>เลือกสิ่งที่คุณสนใจ</h2>
+        <div id="content"></div>
+    </div>
+
+    <input type="checkbox" name="interrest" value="กีฬา"> กีฬา
+    <input type="checkbox" name="interrest" value="เพลง"> เพลง
+    <input type="checkbox" name="interrest" value="หนัง"> หนัง
+    <input type="checkbox" name="interrest" value="อาหาร"> อาหาร
+
+    <button onclick="submitinterrest()"> แสดงสิ่งที่สนใจ </button>
+
+    <script>
+        function submitinterrest() {
+            let interrestDOM = document.querySelectorAll('input[name="interrest"]');
+            let contentHTML = '<ul>';
+
+            for (let i = 0; i < interrestDOM.length; i++) {
+                if (interrestDOM[i].checked) {
+                    contentHTML += '<li>' + interrestDOM[i].value + '</li>';
+                }
+            }
+        
+            contentHTML += '</ul>';
+        
+            let contentDOM = document.getElementById('content');
+            contentDOM.innerHTML = contentHTML;
+        }
+
+        
+
+
+    </script>
+
+</body>
+
+</html>
