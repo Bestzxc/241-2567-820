@@ -1,0 +1,24 @@
+cd ./ชื่อ/  // เปลี่ยน path folder
+docker -v //เช็คเวอร์ชัน
+docker ps //list all running container
+docker ps --all หรือ docker ps -a //list all container
+
+
+docker run ชื่อ //รัน image
+docker rm ไอดี //ลบdocker
+docker run -p พอร์ตนอก(เว็ป):พอร์ตใน(คอนเทนเนอร์) //ระบุ port ว่าจะเข้าถึงยังไง
+
+docker run -d -p 9000:80 nginx //-d คือการทำเเบบ background
+docker stop 5d2b71777cf7 // หยุดการทำงาน
+docker exec -it 2a481abdd267 bash//เข้าถึง container
+
+ls // list all file
+pwd // present working directory
+cd // change directory
+cd .. //go back to previous directory
+cd /etc/nginx // go to nginx directory
+cat file_name // display the content of a file
+
+
+docker-compose up -d //รัน script
+docker-compost down //หยุด
