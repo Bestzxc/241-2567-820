@@ -21,7 +21,7 @@ cat file_name // display the content of a file
 
 
 docker-compose up -d //รัน script
-docker-compost down //หยุด
+docker-compose down //หยุด
 
 
 npm i mysql2 //ติดตั้ง package
