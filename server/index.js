@@ -4,10 +4,7 @@ const app = express(); //เก็บ express ไว้ในตัวแปร 
 const mysql = require('mysql2/promise'); // ใช้เชื่อมต่อเเละสั่งงานเเบบ async/await
 app.use(bodyParser.json()); //กำหนดให้ express รองรับ JSON request body
 const port = 8000; //กำหนดให้รันที่ port 8000
-
 const cors = require('cors'); //เป็น middleware ที่ช่วยให้เราสามารถเรียกใช้ API จาก domain อื่นได้
-let users = [] //เก็บข้อมูล user ทั้งหมดในหน่วยความจำ
-let conn = null //เก็บ connection ไว้ใช้งาน
 app.use(cors()); //ใช้ cors ใน express
 let users = [] //เก็บข้อมูล user ทั้งหมดในหน่วยความจำ
 let conn = null //เก็บ connection ไว้ใช้งาน
