@@ -21,6 +21,13 @@ cat file_name // display the content of a file
 
 *** mySQL ***
 docker-compose up -d //รัน script
+
+docker-compost down //หยุด
+
+npx nodemon //รัน server
+
+npm i cors //ตัวขออนุญาติ
+=======
 docker-compose down //หยุด
 
 *** install/server ***
