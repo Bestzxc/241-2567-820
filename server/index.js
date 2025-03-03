@@ -4,17 +4,13 @@ const app = express(); //เก็บ express ไว้ในตัวแปร 
 const mysql = require('mysql2/promise'); // ใช้เชื่อมต่อเเละสั่งงานเเบบ async/await
 app.use(bodyParser.json()); //กำหนดให้ express รองรับ JSON request body
 const port = 8000; //กำหนดให้รันที่ port 8000
-<<<<<<< HEAD
-const cors = require('cors'); //เป็น middleware ที่ช่วยให้เราสามารถเรียกใช้ API จาก domain อื่นได้
 
+const cors = require('cors'); //เป็น middleware ที่ช่วยให้เราสามารถเรียกใช้ API จาก domain อื่นได้
 let users = [] //เก็บข้อมูล user ทั้งหมดในหน่วยความจำ
 let conn = null //เก็บ connection ไว้ใช้งาน
 app.use(cors()); //ใช้ cors ใน express
-=======
 let users = [] //เก็บข้อมูล user ทั้งหมดในหน่วยความจำ
 let conn = null //เก็บ connection ไว้ใช้งาน
-
->>>>>>> bee19c87a65522df8030b1a83fdf209d8d8d59ed
 
 //*** GET /users สำหรับ get ข้อมูล user ทั้งหมด
 //*** POST /user สำหรับสร้าง create user ใหม่บันทึกเข้าไป
@@ -70,7 +66,6 @@ app.get('/users', async (req, res) => {
     const results = await conn.query('SELECT * FROM users')
     res.json(results[0])
 })
-<<<<<<< HEAD
 app.get('/users/:id', async(req, res) => {
     try{
         let id = req.params.id;
@@ -142,7 +137,7 @@ app.delete('/user/:id', async (req, res) => {
             errorMessage: error.message
         })
     }
-=======
+})
 
 //2.path = POST / User
 app.post('/users', async (req, res) => { //สร้าง path /users สำหรับ post (สร้างข้อมูลใหม่)
@@ -197,7 +192,7 @@ app.delete('/user/:id', (req, res) => { //สร้าง path สำหรั�
         message: 'Delete Completed',
         indexDelete: selectedIndex //ส่ง index ของ user ที่ลบกลับไปให้ client ในรูปแบบ JSON
     });
->>>>>>> bee19c87a65522df8030b1a83fdf209d8d8d59ed
+
 });
 
 app.listen(port, async (req, res) => { //เปิด server ที่ port 8000 หรือคือเริ่มต้น express
