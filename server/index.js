@@ -1,8 +1,10 @@
 const express = require('express'); //express = เว็บ framework ของ node.js เพื่อให้สร้าง API ได้ง่ายขึ้น
 const bodyParser = require('body-parser'); // body-parser = แปลงข้อมูล HTTP ที่เข้ามาให้เป็น json 
 const app = express(); //เก็บ express ไว้ในตัวแปร app
+const cors = require('cors'); //cors = ใช้ในการเปิดให้เว็บเเราสามารถเรียกใช้ API ได้
 const mysql = require('mysql2/promise'); // ใช้เชื่อมต่อเเละสั่งงานเเบบ async/await
 app.use(bodyParser.json()); //กำหนดให้ express รองรับ JSON request body
+app.use(cors());
 const port = 8000; //กำหนดให้รันที่ port 8000
 let users = [] //เก็บข้อมูล user ทั้งหมดในหน่วยความจำ
 let conn = null //เก็บ connection ไว้ใช้งาน
@@ -62,63 +64,78 @@ app.get('/users', async (req, res) => {
     const results = await conn.query('SELECT * FROM users')
     res.json(results[0])
 })
+// get ตาม id
+app.get('/users/:id', async (req, res) => {
+    try {
+        let id = req.params.id; //รับค่า id ที่ส่งมาจาก client ผ่าน parameter เเละเก็บไว้ในตัวแปร id
+        const results = await conn.query('SELECT * FROM users WHERE id = ?', id)
+        res.json(results[0])
+    } catch (error) {
+        console.log('Error fetching users:', error.message)
+        res.status(500).json({
+            error: 'Something went wrong',
+            errorMessage: error.message
+        })
+    }
+})
 
 //2.path = POST / User
 app.post('/users', async (req, res) => { //สร้าง path /users สำหรับ post (สร้างข้อมูลใหม่)
-    let user = req.body; //เก็บข้อมูลที่ส่งมาจาก client ที่อยู่ใน body ไว้ในตัวแปร user
-    const results = await conn.query('INSERT INTO users SET ?', user) // SET ? ทำให้เก็บข้อมูลได้ง่ายไม่ต้องระบุฟิลด์ทีละฟิลด์
-    console.log('results', results) 
-    res.json({
-        message: 'User created', //ส่งข้อความกลับไปให้ client ว่าสร้างข้อมูลเสร็จสิ้น
-        data: results[0]   //ส่งข้อมูลที่สร้างไปให้ client
-    });
+    try {
+        let user = req.body; //เก็บข้อมูลที่ส่งมาจาก client ที่อยู่ใน body ไว้ในตัวแปร user
+        const results = await conn.query('INSERT INTO users SET ?', user) // SET ? ทำให้เก็บข้อมูลได้ง่ายไม่ต้องระบุฟิลด์ทีละฟิลด์
+        console.log('results', results)
+        res.json({
+            message: 'User created', //ส่งข้อความกลับไปให้ client ว่าสร้างข้อมูลเสร็จสิ้น
+            data: results[0]   //ส่งข้อมูลที่สร้างไปให้ client
+        });
+    } catch (error) {
+        console.log('Error fetching users:', error.message)
+        res.status(500).json({
+            message: 'Something went wrong',
+            errorMessage: error.message
+        })
+    }
 })
 
 //3.path = PUT / user/:id 
-app.put('/user/:id', (req, res) => { //สร้าง path สำหรับ put (อัพเดทข้อมูล)
-    let id = req.params.id; //รับค่า id ที่ส่งมาจาก client เเละเก็บไว้ในตัวแปร id
-    let updateUser = req.body; //รับข้อมูลที่ส่งมาจาก client ที่อยู่ใน body ไว้ในตัวแปร updateUser
-    // find users from id request
-    let selectedIndex = users.findIndex(user => user.id == id) //หา index ของ user ที่ต้องการอัพเดทโดยฟังก์ชัน user=>user.id == id
-    // update user 
-    if (updateUser.firstname) { //เช็คว่ามีข้อมูล firstname ใหม่ที่ส่งมาจาก client หรือไม่(req.body)
-        users[selectedIndex].firstname = updateUser.firstname //ถ้ามีก็เปลี่ยนข้อมูล firstname ใหม่ใน users ที่เราเลือก
+app.put('/user/:id', async (req, res) => { //สร้าง path สำหรับ put (อัพเดทข้อมูล)
+    try {
+        let id = req.params.id; //รับค่า id ที่ส่งมาจาก client เเละเก็บไว้ในตัวแปร id
+        let updateUser = req.body; //รับข้อมูลที่ส่งมาจาก client ที่อยู่ใน body ไว้ในตัวแปร updateUser
+        const results = await conn.query('UPDATE users SET ? WHERE id = ?', [updateUser, id]) // SET ? ทำให้เก็บข้อมูลได้ง่ายไม่ต้องระบุฟิลด์ทีละฟิลด์
+        res.json({
+            message: 'User updated', //ส่งข้อความกลับไปให้ client ว่าสร้างข้อมูลเสร็จสิ้น
+            data: results[0]   //ส่งข้อมูลที่สร้างไปให้ client
+        });
+    } catch (error) {
+        console.log('errorMessage:', error.message)
+        res.status(500).json({
+            message: 'Something went wrong',
+            errorMessage: error.message
+        })
     }
-    if (updateUser.lastname) {  //เช็คว่ามีข้อมูล lastname ใหม่ที่ส่งมาจาก client หรือไม่(req.body)
-        users[selectedIndex].lastname = updateUser.lastname //ถ้ามีก็เปลี่ยนข้อมูล lastname ใหม่ใน users ที่เราเลือก
-    }
-
-    users[selectedIndex].firstname = updateUser.firstname || users[selectedIndex].firstname //เปลี่ยนข้อมูล firstname ใหม่ใน users ที่เราเลือกหรือใช้ข้อมูลเดิม (ให้ตัวหน้าก่อนถ้ามีข้อมูลทั้ง 2 ตัว)
-    users[selectedIndex].lastname = updateUser.lastname || users[selectedIndex].lastname //เปลี่ยนข้อมูล lastname ใหม่ใน users ที่เราเลือกหรือใช้ข้อมูลเดิม (ให้ตัวหน้าก่อนถ้ามีข้อมูลทั้ง 2 ตัว)
-
-    res.json({ //ส่งข้อมูลกลับไปให้ client ในรูปแบบ JSON
-        message: 'User updated successfully',   //ข้อความที่ส่งกลับไปให้ client
-        data: {
-            user: updateUser,  //ข้อมูล user ที่ส่งมาจาก client
-            indexUpdate: selectedIndex  //index ของ user ที่อัพเดท
-        }
-    });
-    // GET / USERS = get all users
-    // POST / USERS = create new user in data
-    // GET /users/:id = get user by id
-    // PUT /users/:id = get user by id
 })
 
 //4.Path = DELETE / user/:id
-app.delete('/user/:id', (req, res) => { //สร้าง path สำหรับ delete (ลบข้อมูล)
-    let id = req.params.id; //รับค่า id ที่ส่งมาจาก client ผ่าน parameter เเละเก็บไว้ในตัวแปร id
-    // find index of user
-    let selectedIndex = users.findIndex(user => user.id == id) //หา index ของ user ที่ต้องการลบโดยฟังก์ชัน user=>user.id == id
-
-    users.splice(selectedIndex, 1) //ลบข้อมูล user ที่เราเลือกออกจาก users โดยใช้ splice (ออกเเค่หน่วยความจำ) | 1 คือจำนวนข้อมูลที่ต้องการลบ
-    delete users[selectedIndex] //ลบข้อมูล user ที่เราเลือกออกจาก users โดยใช้ delete (ลบข้อมูลจริงๆ)
-    res.json({
-        message: 'Delete Completed',
-        indexDelete: selectedIndex //ส่ง index ของ user ที่ลบกลับไปให้ client ในรูปแบบ JSON
-    });
+app.delete('/user/:id', async (req, res) => { //สร้าง path สำหรับ delete (ลบข้อมูล)
+    try {
+        let id = req.params.id; //รับค่า id ที่ส่งมาจาก client เเละเก็บไว้ในตัวแปร id
+        const results = await conn.query('DELETE From users WHERE id = ?', id) // SET ? ทำให้เก็บข้อมูลได้ง่ายไม่ต้องระบุฟิลด์ทีละฟิลด์
+        res.json({
+            message: 'User deleted', //ส่งข้อความกลับไปให้ client ว่าสร้างข้อมูลเสร็จสิ้น
+            data: results[0]   //ส่งข้อมูลที่สร้างไปให้ client
+        });
+    } catch (error) {
+        console.log('errorMessage:', error.message)
+        res.status(500).json({
+            message: 'Something went wrong',
+            errorMessage: error.message
+        })
+    }
 });
 
 app.listen(port, async (req, res) => { //เปิด server ที่ port 8000 หรือคือเริ่มต้น express
     await initMySQL() //เรียกใช้ฟังก์ชัน initMySQL เพื่อเชื่อมต่อกับ MySQL
-    console.log(`Server is running on port` + port);
+    console.log(`Server is running on port:` + port);
 });
