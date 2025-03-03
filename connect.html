@@ -8,8 +8,8 @@
 <body>
     <script>
         fetch('http://localhost:8000/users')
-        .then((respon)=>{
-            return respon.json()
+        .then((response)=>{
+            return response.json()
         })
         .then((responseData)=>{
             console.log('responseData', responseData)
