@@ -16,6 +16,29 @@ let conn = null //เก็บ connection ไว้ใช้งาน
 
 // http://localhost:8000/(path)
 
+const validatedata = (userData) => {
+    let errors = [];
+    if (!userData.firstname) {
+        errors.push('กรุณากรอกชื่อ');
+    }
+    if (!userData.lastName){
+        errors.push('กรุณากรอกนามสกุล')
+    }
+    if (!userData.age){
+        errors.push('กรุณากรอกอายุ')
+    }
+    if (!userData.gender){
+        errors.push('กรุณากรอกนามสกุล')
+    }
+    if (!userData.interests){
+        errors.push('กรุณากรอกสิ่งที่สนใจ')
+    }
+    if (!userData.description){
+        errors.push('กรุณากรอกข้อมูลตัวเอง')
+    }
+    return errors;
+}
+
 //1.GET /user/:id สำหรับ get ข้อมูล user รายคนที่ต้องการ
 app.get('/testdb', (req, res) => { // /testdb คือ path ที่เราต้องการให้เข้าถึง สำหรับ get 
     mysql.createConnection({ //เชื่อมต่อกับ MySQL ด้วย createConnection
@@ -85,7 +108,15 @@ app.get('/users/:id', async(req, res) => {
 app.post('/users', async (req, res) => { //สร้าง path /users สำหรับ post (สร้างข้อมูลใหม่)
     try {
         let user = req.body; //เก็บข้อมูลที่ส่งมาจาก client ที่อยู่ใน body ไว้ในตัวแปร user
+        const errors = validatedata(user);
+        if (error.length > 0){
+            throw{
+                message:"กรุณากรอกข้อมูลให้ครบถ้วน",
+                errors:error
+            }
+        }
         const result = await conn.query('INSERT INTO users SET ?', user) //เพิ่มข้อมูลใหม่ลงในตาราง users โดยใช้คำสั่ง SQL
+        
         res.json({
             message: 'User created', //ส่งข้อความกลับไปให้ client
             data: result[0] //id ของ user ที่เพิ่มเข้าไปในตาราง users

@@ -42,6 +42,20 @@ input.form, textarea {
     background-color: aqua;
     height: 40px;
 }
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: lightgray;
+}
+.message.success {
+    background-color: lightgreen;
+    display: block;
+}
+.message.error {
+    background-color: lightcoral;
+    display: block;
+}
 
 @media screen and (max-width: 768px) {
     .flex {
