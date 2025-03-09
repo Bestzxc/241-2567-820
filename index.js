@@ -86,7 +86,7 @@ const submitData = async () => {
         htmlData += '</ul>'
         htmlData += '</div>'
 
-        messageDOM.innerText = "เกิดข้อผิดพลาด";
+        messageDOM.innerHTML = "เกิดข้อผิดพลาด";
         messageDOM.className = "message danger";
 
     }
