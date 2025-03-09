@@ -47,6 +47,28 @@ const initMySQL = async () => { // สร้างฟังก์ชัน initM
         port: 8830 //port ที่ MySQL ใช้
     })
 }
+const validateData = (userData) => {
+    let errors = [];
+    if (!userData.firstname){
+        errors.push('กรุณากรอกชื่อ')
+    }
+    if (!userData.lastname){
+        errors.push('กรุณากรอกนามสกุล')
+    }
+    if (!userData.age){
+        errors.push('กรุณากรอกอายุ')
+    }
+    if (!userData.gender){
+        errors.push('กรุณากรอกเพศ')
+    }
+    if (!userData.interest){
+        errors.push('กรุณากรอกสิ่งที่สนใจ')
+    }
+    if (!userData.description){
+        errors.push('กรุณากรอกข้อมูลส่วนตัว')
+    }
+    return errors;
+}
 
 app.get('/testdb-new', async (req, res) => { //สร้าง path /testdb-new สำหรับ get 
     try { //ใช้ try/catch ในการจัดการ error
@@ -83,6 +105,14 @@ app.get('/users/:id', async (req, res) => {
 app.post('/users', async (req, res) => { //สร้าง path /users สำหรับ post (สร้างข้อมูลใหม่)
     try {
         let user = req.body; //เก็บข้อมูลที่ส่งมาจาก client ที่อยู่ใน body ไว้ในตัวแปร user
+        const errors = validateData(user);
+        if(errors.length > 0){
+            throw {
+                message: 'กรุณากรอกข้อมูลให้ครบถ้วน', 
+                errors: errors
+            }
+        }
+        
         const results = await conn.query('INSERT INTO users SET ?', user) // SET ? ทำให้เก็บข้อมูลได้ง่ายไม่ต้องระบุฟิลด์ทีละฟิลด์
         console.log('results', results)
         res.json({
@@ -90,10 +120,12 @@ app.post('/users', async (req, res) => { //สร้าง path /users สำห
             data: results[0]   //ส่งข้อมูลที่สร้างไปให้ client
         });
     } catch (error) {
-        console.log('Error fetching users:', error.message)
+        const errorMessage = error.message || 'something went wrong';
+        const errors =error.errors || [];
+        console.error('Error fetching users:', error.message)
         res.status(500).json({
-            message: 'Something went wrong',
-            errorMessage: error.message
+            message: errorMessage,
+            errors: errors
         })
     }
 })
