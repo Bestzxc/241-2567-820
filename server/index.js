@@ -142,7 +142,7 @@ app.post('/users', async (req, res) => { //สร้าง path /users สำห
         console.log('results', results)
         res.json({
             message: 'User created', //ส่งข้อความกลับไปให้ client
-            data: result[0] //id ของ user ที่เพิ่มเข้าไปในตาราง users
+            data: results[0] //id ของ user ที่เพิ่มเข้าไปในตาราง users
         })
     } catch (error) {
         const errorMessage = error.message || 'something went wrong';
