@@ -45,23 +45,14 @@ input.form, textarea {
 .message {
     margin-top: 20px;
     padding: 10px;
-<<<<<<< HEAD
     background-color: lightgray;
     display: none;
-=======
-    border: 1px solid black;
-    background-color: lightgray;
->>>>>>> 5d1110b284c9f53e479ed3ecb1682c485320f0cf
 }
 .message.success {
     background-color: lightgreen;
     display: block;
 }
-<<<<<<< HEAD
 .message.danger {
-=======
-.message.error {
->>>>>>> 5d1110b284c9f53e479ed3ecb1682c485320f0cf
     background-color: lightcoral;
     display: block;
 }
