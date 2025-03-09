@@ -10,7 +10,7 @@ const validatedata = (userData) => {
         errors.push('กรุณากรอกอายุ')
     }
     if (!userData.gender) {
-        errors.push('กรุณากรอกนามสกุล')
+        errors.push('กรุณากรอกเพศ')
     }
     if (!userData.interests) {
         errors.push('กรุณากรอกสิ่งที่สนใจ')
