@@ -16,29 +16,6 @@ let conn = null //เก็บ connection ไว้ใช้งาน
 
 // http://localhost:8000/(path)
 
-const validatedata = (userData) => {
-    let errors = [];
-    if (!userData.firstname) {
-        errors.push('กรุณากรอกชื่อ');
-    }
-    if (!userData.lastName){
-        errors.push('กรุณากรอกนามสกุล')
-    }
-    if (!userData.age){
-        errors.push('กรุณากรอกอายุ')
-    }
-    if (!userData.gender){
-        errors.push('กรุณากรอกนามสกุล')
-    }
-    if (!userData.interests){
-        errors.push('กรุณากรอกสิ่งที่สนใจ')
-    }
-    if (!userData.description){
-        errors.push('กรุณากรอกข้อมูลตัวเอง')
-    }
-    return errors;
-}
-
 //1.GET /user/:id สำหรับ get ข้อมูล user รายคนที่ต้องการ
 app.get('/testdb', (req, res) => { // /testdb คือ path ที่เราต้องการให้เข้าถึง สำหรับ get 
     mysql.createConnection({ //เชื่อมต่อกับ MySQL ด้วย createConnection

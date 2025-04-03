@@ -1,0 +1,125 @@
+@font-face {
+    font-family: 'kanit';
+    src: url('./Kanit/Kanit-Regular.ttf');
+}
+
+body {
+    font-family: 'kanit';
+    font-weight: bold;
+    background-image: url('./images/web-wallpaper.jpg');
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    display: block;
+    margin: 0 auto;               
+    font-size: 80px;              
+    font-weight: bold;  
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;          
+}
+
+.link {
+    display: inline-block;
+    border: 3px solid #ffffff;
+    border-radius: 8px;
+    padding: 7px 15px;
+    margin: 20px;
+    box-shadow: 0 0 6px black;
+    box-sizing: border-box;
+    transition:0.3s;
+    
+}
+.back-link {
+    text-decoration: none;
+    color: white;
+    transition:0.3s;
+    
+}
+.link:hover{
+    border-color: #6d54b5;
+    transform: scale(1.1);
+}
+.link:hover .back-link{
+    color: #6d54b5;
+    transform: scale(1.1);
+}
+.link:active{
+    border-color: #342955;
+}
+.link:active .back-link{
+    color: #342955;
+}
+
+.container {
+    margin: 20px;
+}
+
+.user-items-container {
+    margin-top: 20px;
+    opacity: 0.95;
+    text-align: center
+}
+.gap{
+    display: grid;
+    grid-template-columns: 60% 20% 20% ;
+}
+
+.user-item {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    background-color: #30243c;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.5s;
+}
+.user-item:hover{
+    background-color: #604977;
+}
+
+.user-info {
+    flex-grow: 1;
+    display: grid;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.edit-btn button {
+    background-color: #4ca94f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn button:hover {
+    background-color: #29612c;
+}
+
+
+.delete-btn {
+    background-color: #bd342b;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #7d201f;
+}
